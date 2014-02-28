@@ -1,4 +1,4 @@
-scalaVersion := "2.10.0"
+scalaVersion := "2.10.3"
 
 name := "play2-mail-plugin"
 
@@ -19,8 +19,8 @@ scalacOptions ++= Seq(
 
 libraryDependencies ++= Seq(
   "org.codemonkey.simplejavamail" % "simple-java-mail" % "2.0",
-  "play" %% "play" % "2.1.1",
-  "play" %% "play-test" % "2.1.1",
-  "org.specs2" %% "specs2" % "1.7.1" % "test",
+  "com.typesafe.play" %% "play" % "2.2.1",
+  "com.typesafe.play" %% "play-test" % "2.2.1",
+  "org.specs2" %% "specs2" % "2.3.8" % "test",
   "junit" % "junit" % "4.8" % "test"
 )
