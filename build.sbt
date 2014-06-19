@@ -2,9 +2,9 @@ scalaVersion := "2.10.3"
 
 name := "play2-mail-plugin"
 
-organization := "play.modules.mail"
+organization := "pl.finpack"
 
-version := "0.4-SNAPSHOT"
+version := "2.2.1"
 
 resolvers ++= Seq(
     "Typesafe repository snapshots" at "http://repo.typesafe.com/typesafe/snapshots/",
