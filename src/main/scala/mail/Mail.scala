@@ -1,10 +1,14 @@
 package mail
 
-import play.api.templates.Html
-import io.Source
 import javax.mail.Message.RecipientType
+
 import org.codemonkey.simplejavamail.Email
 import javax.mail.internet.MimeUtility
+
+import akka.actor.ActorSystem
+import play.twirl.api.Html
+
+import scala.io.Source
 
 /** Provides [[mail.Mail]] instance factory method, case classes and implicits needed to make it work */
 object Mail {
@@ -12,7 +16,7 @@ object Mail {
   def apply() = new Mail[UNSET, UNSET, UNSET, UNSET]()
   /** Allows mail instance with all required fields set to be sent */
   implicit def enableSending(mail: Mail[SET, SET, SET, SET]) = new {
-    def send() { MailActor.get ! toEmail }
+    def send()(implicit ac: ActorSystem) { MailActor.get ! toEmail }
     private def toEmail = {
       val e = new Email()
       mail.from.map { case (name, address) => e.setFromAddress(name, address) }

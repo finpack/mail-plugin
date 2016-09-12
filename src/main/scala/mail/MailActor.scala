@@ -1,10 +1,8 @@
 package mail
 
+import akka.actor.{Actor, ActorSystem, Props}
+import org.codemonkey.simplejavamail.{Email, MailException, Mailer}
 import play.api.Logger
-import play.api.libs.concurrent._
-import akka.actor.{Actor, Props}
-import org.codemonkey.simplejavamail.{MailException, Email, Mailer}
-import play.api.Play.current
 
 /** Factory for mailer actors ([[mail.MailActor.MailActor]] and [[mail.MailActor.MailActorMock]]). Provides access
   * to actor reference.
@@ -12,11 +10,11 @@ import play.api.Play.current
 object MailActor {
   private val actorName: String = "mailer"
   /** Creates mailer actor backed by mailer specified in parameter ([[mail.MailActor.MailActor]]) */
-  def startWith(mailer: Mailer) = Akka.system.actorOf(Props(new MailActor(mailer)), name = actorName)
+  def startWith(mailer: Mailer)(implicit actorSystem: ActorSystem) = actorSystem.actorOf(Props(new MailActor(mailer)), name = actorName)
   /** Creates mocked mailer actor ([[mail.MailActor.MailActorMock]]) */
-  def startWithMock = Akka.system.actorOf(Props(new MailActorMock()), name = actorName)
+  def startWithMock(implicit actorSystem: ActorSystem) = actorSystem.actorOf(Props(new MailActorMock()), name = actorName)
   /** Looks up for mailer actor instance */
-  def get = Akka.system.actorFor("/user/%s".format(actorName))
+  def get(implicit actorSystem: ActorSystem) = actorSystem.actorSelection("/user/%s".format(actorName))
 
   /** Sends email when receiving instance of Email.
     *
